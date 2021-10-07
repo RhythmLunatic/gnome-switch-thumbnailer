@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-nintendo-switch">
+        <sub-class-of type="application/octet-stream"/>
+        <comment>Nintendo Switch file</comment>
+        <glob pattern="*.nsp"/>
+        <glob pattern="*.nsz"/>
+        <glob pattern="*.xci"/>
+        <glob pattern="*.xcz"/>
+    </mime-type>
+</mime-info>

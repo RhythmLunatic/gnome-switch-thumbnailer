@@ -1,0 +1,4 @@
+[Thumbnailer Entry]
+TryExec=nintendo-switch-thumbnailer
+Exec=nintendo-switch-thumbnailer %i %s %o
+MimeType=application/x-nintendo-switch;

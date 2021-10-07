@@ -22,12 +22,37 @@ TYPE_DLC = 2
 
 
 HEIGHT = int(sys.argv[2])
+
+
+def get_titleID_from_file(f):
+	with open(f, 'rb') as nca:
+		ext = sys.argv[1].split('.')[-1].upper()
+		if ext=="NSP" or ext=="NSZ":
+			from struct import unpack as up
+			magic, num_files, name_table_size, reserved = up('<IIII', nca.read(0x10))
+			#for each file entry there is a struct, but we don't need this information
+			nca.read((8+8+4+4)*num_files)
+			for i in range(num_files):
+				s = ''.join(iter(lambda: nca.read(1).decode('ascii'), '\x00'))
+				print(s)
+				if 'tik' in s or 'cert' in s:
+					return s[:16].upper()
+			#If we got here, none found
+			print("This file is missing tickets with a matching ID, cannot determine...")
+			sys.exit(-1)
+		else:
+			print("No support for reading IDs from XCI/XCZ and not present in filename, cannot continue")
+			sys.exit(-1)
+		#titleID = nca.read(0x10).decode('ascii').upper()
+
 #print(sys.argv[1])
 match = re.search(r"\[(\w{16}\b)\]",sys.argv[1])
-if not match:
-	print("no match")
-	sys.exit(-1)
-titleID = match.group(1).upper()
+if match:
+	titleID = match.group(1).upper()
+else:
+	titleID = get_titleID_from_file(sys.argv[1])
+	print("Got titleID from file: "+titleID)
+		
 pkgType=0
 if titleID[-3]=='8':
 	s=list(titleID)

@@ -27,7 +27,7 @@ match = re.search(r"\[(\w{16}\b)\]",sys.argv[1])
 if not match:
 	print("no match")
 	sys.exit(-1)
-titleID = match.group(1)
+titleID = match.group(1).upper()
 pkgType=0
 if titleID[-3]=='8':
 	s=list(titleID)
